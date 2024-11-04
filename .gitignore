@@ -1,0 +1,6 @@
+*.log
+#venv
+venv/
+
+#environment variables
+.env
