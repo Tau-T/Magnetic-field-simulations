@@ -45,7 +45,7 @@ helmholtz = magpy.Collection(coil1, coil2)
 
 # -------------------------------------------------------------------------------
 # Compute the field and gradient on the yz-grid
-grid = np.mgrid[0:0:1j, -0.03:0.03:31j, -0.01:0.01:201j].T[:, :, 0]
+grid = np.mgrid[0:0:1j, -0.03:0.03:31j, -0.03:0.03:201j].T[:, :, 0]
 _, Y, Z = np.moveaxis(grid, 2, 0)
 
 # Get the magnetic field from helmholtz coil
@@ -55,10 +55,12 @@ _, By, Bz = np.moveaxis(B, 2, 0)
 # Compute the magnitude of B
 Bamp = np.linalg.norm(B, axis=2)
 
-print((Bamp[50,15])/2*10**4)
-print(Bamp[100,15]*10**4)
-print((Bamp[0,15])*10**4)
-print((Bamp[200,15])*10**4)
+
+
+#print((Bamp[50,15])/2*10**4)
+#print(Bamp[100,15]*10**4)
+#print((Bamp[0,15])*10**4)
+#print((Bamp[200,15])*10**4)
 
 # Compute the gradient magnitude of the field amplitude using gaussian_gradient_magnitude
 field_gradient_magnitude = gaussian_gradient_magnitude(Bamp, sigma=1)
@@ -72,9 +74,9 @@ ax1.set(title='Magnetic Field of Helmholtz Coil', xlabel='y-position (m)', ylabe
 plt.colorbar(sp1.lines, ax=ax1, label='Magnetic Field Magnitude (T)')
 
 # Plot the gradient magnitude of the field
-sp2 = ax2.imshow(field_gradient_magnitude*10**4, extent=(Y.min(), Y.max(), Z.min(), Z.max()), origin='lower', cmap='inferno')
-ax2.set(title='Field Gradient Magnitude', xlabel='y-position (m)', ylabel='z-position (m)', aspect=1)
-plt.colorbar(sp2, ax=ax2, label='Gradient Magnitude (T/m)')
+sp2 = ax2.imshow(Bamp*10**4, extent=(Y.min(), Y.max(), Z.min(), Z.max()), origin='lower', cmap='inferno')
+ax2.set(title='Field Magnitude', xlabel='y-position (m)', ylabel='z-position (m)', aspect=1)
+plt.colorbar(sp2, ax=ax2, label='Field (G)')
 
 plt.tight_layout()
 plt.show()
