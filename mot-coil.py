@@ -45,7 +45,7 @@ helmholtz = magpy.Collection(coil1, coil2)
 
 # -------------------------------------------------------------------------------
 # Compute the field and gradient on the yz-grid
-grid = np.mgrid[0:0:1j, -0.03:0.03:31j, -0.03:0.03:201j].T[:, :, 0]
+grid = np.mgrid[0:0:1j, -0.03:0.03:101j, -0.03:0.03:101j].T[:, :, 0]
 _, Y, Z = np.moveaxis(grid, 2, 0)
 
 # Get the magnetic field from helmholtz coil
@@ -56,14 +56,16 @@ _, By, Bz = np.moveaxis(B, 2, 0)
 Bamp = np.linalg.norm(B, axis=2)
 
 
-
+print(Bamp)
+print('this is Y')
+print(Y[0,:])
 #print((Bamp[50,15])/2*10**4)
 #print(Bamp[100,15]*10**4)
 #print((Bamp[0,15])*10**4)
 #print((Bamp[200,15])*10**4)
 
 # Compute the gradient magnitude of the field amplitude using gaussian_gradient_magnitude
-field_gradient_magnitude = gaussian_gradient_magnitude(Bamp, sigma=1)
+grad_y, grad_z = np.gradient(Bamp, Y[0,:], Z[0,:])
 
 # Plotting the field and its gradient
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
@@ -80,4 +82,11 @@ plt.colorbar(sp2, ax=ax2, label='Field (G)')
 
 plt.tight_layout()
 plt.show()
+
+print('This is grad_y')
+print(grad_y*100)
+print('this is grad_z')
+print(grad_z*100)
+
+#plt.streamplot(Y,Z, grad_y, grad_z, density=2, color=Bamp, linewidth=np.sqrt(Bamp)*3, cmap= 'coolowarm')
 
