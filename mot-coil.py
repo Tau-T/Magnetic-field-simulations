@@ -56,15 +56,11 @@ _, By, Bz = np.moveaxis(B, 2, 0)
 Bamp = np.linalg.norm(B, axis=2)
 
 
-print(Bamp)
-print('this is Y')
-print(Y[0,:])
-#print((Bamp[50,15])/2*10**4)
-#print(Bamp[100,15]*10**4)
-#print((Bamp[0,15])*10**4)
-#print((Bamp[200,15])*10**4)
-
 # Compute the gradient magnitude of the field amplitude using gaussian_gradient_magnitude
+print('Z spacing')
+print(Z[0,1]-Z[0,0])
+print('Y-spacing')
+print(Y[0,1]-Y[0,0])
 grad_y, grad_z = np.gradient(Bamp, Y[0,:], Z[0,:])
 
 # Plotting the field and its gradient
